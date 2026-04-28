@@ -4,5 +4,4 @@ export enum PaymentStatus {
     PAYMENTREQUIRED = 'paymentrequired',
     NOTFOUND = 'notfound',
     UNPROCESSABLEENTITY = 'unprocessableentity',
-
 }
