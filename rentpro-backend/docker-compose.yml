@@ -1,0 +1,15 @@
+services: 
+  postgres:
+    image: postgres:latest
+    container_name: rentpro-postgres
+    environment:
+      POSTGRES_USER: luiz
+      POSTGRES_PASSWORD: luiz
+      POSTGRES_DB: rentpro_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+volumes:
+  postgres_data:

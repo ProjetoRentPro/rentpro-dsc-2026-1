@@ -1,7 +1,7 @@
-import {RentStatusEnum} from "../../../commons/enums/rent-status.enum";
+import {RentStatus} from "../../../commons/enums/rent-status.enum";
 export class ConfirmRentResponseDto {
     constructor(
-        public reserva_id: number,
-        public RentStatus: RentStatusEnum
+        public reserva_id: string,
+        public RentStatus: RentStatus
     ) {}
 }
