@@ -1,9 +1,12 @@
-import {Payment} from "../entities/payment.entity";
+import { PaymentEntity } from '../entities/payment.entity';
+
+export const PAYMENT_REPOSITORY = 'PAYMENT_REPOSITORY';
 
 export interface IPaymentRepository {
-    create(payment: Payment): Promise<Payment>;
-    findById(pagamento_id: number): Promise<Payment | null>;
-    findAll(): Promise<Payment[]>;
-    update(payment: Payment): Promise<Payment>;
-    delete(pagamento_id: number): Promise<void>;
+    create(payment: PaymentEntity): Promise<PaymentEntity>;
+    findById(id: string): Promise<PaymentEntity | null>;
+    findByReservaId(reservaId: string): Promise<PaymentEntity[]>;
+    findAll(): Promise<PaymentEntity[]>;
+    update(payment: PaymentEntity): Promise<PaymentEntity>;
+    delete(id: string): Promise<void>;
 }

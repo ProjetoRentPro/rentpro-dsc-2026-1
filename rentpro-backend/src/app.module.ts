@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RentEntity } from './modules/rent/entities/rent.entity';
 import { Equipment } from './modules/equipments/entities/equipment.entity';
-import { Payment } from './modules/payments/entities/payment.entity';
+import { PaymentEntity } from './modules/payments/entities/payment.entity';
 import { User } from './modules/users/entities/user.entity';
 
 @Module({
@@ -21,7 +21,7 @@ import { User } from './modules/users/entities/user.entity';
         username: configService.get('DB_USER'),
         password: configService.get('DB_PASS'),
         database: configService.get('DB_NAME'),
-        entities: [RentEntity, Equipment, Payment, User],
+        entities: [RentEntity, Equipment, PaymentEntity, User],
         synchronize: true,
       }),
     }),
