@@ -1,0 +1,14 @@
+@baseURL = http://localhost:3000
+
+### [CREATE] Criar um novo equipamento — esperado: 201 Created
+POST {{baseURL}}/equipments
+Content-Type: application/json
+
+{
+  "nome": "Furadeira Bosch GSB 13 RE",
+  "proprietario_id": 1,
+  "descricao": "Furadeira eletrica de alta potencia para uso profissional.",
+  "categoria": "Ferramentas",
+  "preco_diaria": 150.00,
+  "status": true
+}

@@ -1,0 +1,37 @@
+@baseUrl = http://localhost:3000
+@contentType = application/json
+@reservaId = cole_um_id_valido
+
+### [UPDATE 1] Caminho feliz — esperado: 200 OK
+PATCH {{baseUrl}}/rents/{{reservaId}}
+Content-Type: {{contentType}}
+
+{
+  "metodo_pagamento": "PIX",
+  "valor_total": 350.00
+}
+
+### [UPDATE 2] Confirmar pela leitura — esperado: 200 OK com dados atualizados
+GET {{baseUrl}}/rents/{{reservaId}}
+
+### [UPDATE 3] Registro inexistente — esperado: 404 Not Found
+PATCH {{baseUrl}}/rents/00000000-0000-0000-0000-000000000000
+Content-Type: {{contentType}}
+
+{
+  "metodo_pagamento": "BOLETO"
+}
+
+### [UPDATE 4] Payload parcial — esperado: 200 OK, apenas valor_total alterado
+PATCH {{baseUrl}}/rents/{{reservaId}}
+Content-Type: {{contentType}}
+
+{
+  "valor_total": 400.00
+}
+
+### [UPDATE 5] Payload vazio — esperado: 200 OK sem alteracoes
+PATCH {{baseUrl}}/rents/{{reservaId}}
+Content-Type: {{contentType}}
+
+{}

@@ -1,8 +1,8 @@
-import { InjectRepository } from "@nestjs/typeorm";
+﻿import { InjectRepository } from "@nestjs/typeorm";
 import { IRentRepository } from "./rent.repository.interface";
 import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
 import { RentEntity } from "../entities/rent.entity";
-import { Repository } from "typeorm/browser/repository/Repository.js";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class RentTypeORMRepository implements IRentRepository {

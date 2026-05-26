@@ -8,6 +8,9 @@ import { RentEntity } from './modules/rent/entities/rent.entity';
 import { Equipment } from './modules/equipments/entities/equipment.entity';
 import { PaymentEntity } from './modules/payments/entities/payment.entity';
 import { User } from './modules/users/entities/user.entity';
+import { RentModule } from './modules/rent/rent.module';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { EquipmentModule } from './modules/equipments/equipment.module';
 
 @Module({
   imports: [
@@ -25,6 +28,9 @@ import { User } from './modules/users/entities/user.entity';
         synchronize: true,
       }),
     }),
+    RentModule,
+    PaymentsModule,
+    EquipmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

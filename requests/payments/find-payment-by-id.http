@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:3000
+
+# Cole um id válido obtido pelo banco ou pelo endpoint de criação
+@paymentId = cole_um_id_valido
+
+### [READ BY ID 1] Registro existente — esperado: 200 OK
+GET {{baseUrl}}/payments/{{paymentId}}
+
+### [READ BY ID 2] Registro inexistente — esperado: 404 Not Found
+GET {{baseUrl}}/payments/00000000-0000-0000-0000-000000000000

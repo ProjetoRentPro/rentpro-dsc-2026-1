@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:3000
+
+# Cole um reservaId válido obtido pelo banco ou pelo endpoint de criação
+@reservaId = cole_um_id_valido
+
+### [READ BY ID 1] Registro existente — esperado: 200 OK
+GET {{baseUrl}}/rents/{{reservaId}}
+
+### [READ BY ID 2] Registro inexistente — esperado: 404 Not Found
+GET {{baseUrl}}/rents/00000000-0000-0000-0000-000000000000

@@ -1,0 +1,37 @@
+@baseUrl = http://localhost:3000
+@contentType = application/json
+@paymentId = cole_um_id_valido
+
+### [UPDATE 1] Caminho feliz — esperado: 200 OK
+PATCH {{baseUrl}}/payments/{{paymentId}}
+Content-Type: {{contentType}}
+
+{
+  "status": "CONFIRMADO",
+  "transacaoId": "TXN-001"
+}
+
+### [UPDATE 2] Confirmar pela leitura — esperado: 200 OK com dados atualizados
+GET {{baseUrl}}/payments/{{paymentId}}
+
+### [UPDATE 3] Registro inexistente — esperado: 404 Not Found
+PATCH {{baseUrl}}/payments/00000000-0000-0000-0000-000000000000
+Content-Type: {{contentType}}
+
+{
+  "status": "CONFIRMADO"
+}
+
+### [UPDATE 4] Payload parcial — esperado: 200 OK, apenas metodo alterado
+PATCH {{baseUrl}}/payments/{{paymentId}}
+Content-Type: {{contentType}}
+
+{
+  "metodo": "PIX"
+}
+
+### [UPDATE 5] Payload vazio — esperado: 200 OK sem alteracoes
+PATCH {{baseUrl}}/payments/{{paymentId}}
+Content-Type: {{contentType}}
+
+{}

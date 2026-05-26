@@ -1,0 +1,37 @@
+@baseUrl = http://localhost:3000
+@contentType = application/json
+@equipmentId = 1
+
+### [UPDATE 1] Caminho feliz — esperado: 200 OK
+PATCH {{baseUrl}}/equipments/{{equipmentId}}
+Content-Type: {{contentType}}
+
+{
+  "nome": "Furadeira Bosch GSB 13 RE - Atualizada",
+  "preco_diaria": 175.00
+}
+
+### [UPDATE 2] Confirmar pela leitura — esperado: 200 OK com dados atualizados
+GET {{baseUrl}}/equipments/{{equipmentId}}
+
+### [UPDATE 3] Registro inexistente — esperado: 404 Not Found
+PATCH {{baseUrl}}/equipments/999999
+Content-Type: {{contentType}}
+
+{
+  "nome": "Equipamento que nao existe"
+}
+
+### [UPDATE 4] Payload parcial — esperado: 200 OK, apenas status alterado
+PATCH {{baseUrl}}/equipments/{{equipmentId}}
+Content-Type: {{contentType}}
+
+{
+  "status": false
+}
+
+### [UPDATE 5] Payload vazio — esperado: 200 OK sem alteracoes
+PATCH {{baseUrl}}/equipments/{{equipmentId}}
+Content-Type: {{contentType}}
+
+{}

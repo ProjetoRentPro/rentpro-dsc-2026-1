@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:3000
+
+# Cole um equipamento_id válido (número inteiro)
+@equipmentId = 1
+
+### [READ BY ID 1] Registro existente — esperado: 200 OK
+GET {{baseUrl}}/equipments/{{equipmentId}}
+
+### [READ BY ID 2] Registro inexistente — esperado: 404 Not Found
+GET {{baseUrl}}/equipments/999999
+
+### [READ BY ID 3] ID inválido (não é número) — esperado: 400 Bad Request
+GET {{baseUrl}}/equipments/abc

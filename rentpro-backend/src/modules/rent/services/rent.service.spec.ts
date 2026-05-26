@@ -1,9 +1,10 @@
 import { Test } from '@nestjs/testing';
 import { RentService } from './rent.service';
-import type { IRentRepository} from '../repositories/rent.repository.interface';
-import {RENT_REPOSITORY} from "../repositories/rent.repository.interface";
-import { RentModule } from '../rent.module';
-//import { Rent } from '../entities/rent.module';
+import type { IRentRepository } from '../repositories/rent.repository.interface';
+import { RENT_REPOSITORY } from '../repositories/rent.repository.interface';
+import { RentEntity } from '../entities/rent.entity';
+import { FindRentByIdResponseDto } from '../dto/find-rent-by-id-response.dto';
+import { RentNotFoundException } from '../../../commons/exceptions/rent-not-found.exception';
 
 describe('RentService', () => {
   let rentService: RentService;
@@ -29,20 +30,25 @@ describe('RentService', () => {
     rentRepository = module.get(RENT_REPOSITORY);
   });
 
-  /*it('should fail when rent does not exist', async () => {
-    rentRepository.findById.mockResolvedValue(null);
+  describe('findById', () => {
+    it('should throw RentNotFoundException when rent does not exist', async () => {
+      const reservaId = '00000000-0000-0000-0000-000000000000';
+      rentRepository.findById.mockResolvedValue(null);
 
-    await expect(rentService.findById(1)).resolves.toBeNull();
-    expect(rentRepository.findById).toHaveBeenCalledWith(1);
-  });*/
+      await expect(rentService.findById(reservaId)).rejects.toThrow(RentNotFoundException);
+      expect(rentRepository.findById).toHaveBeenCalledWith(reservaId);
+    });
 
- /* it('should return a rent when it exists', async () => {
-  
-    
-    
-    rentRepository.findById.mockResolvedValue(rent);
+    it('should return FindRentByIdResponseDto when rent exists', async () => {
+      const reservaId = 'abc123ef-0000-0000-0000-000000000001';
+      const rent = new RentEntity({ reservaId });
+      rentRepository.findById.mockResolvedValue(rent);
 
-    await expect(rentService.findById(1)).resolves.toEqual(rent);
-    expect(rentRepository.findById).toHaveBeenCalledWith(1);
-  });*/
+      const result = await rentService.findById(reservaId);
+
+      expect(result).toBeInstanceOf(FindRentByIdResponseDto);
+      expect(result.reservaId).toBe(reservaId);
+      expect(rentRepository.findById).toHaveBeenCalledWith(reservaId);
+    });
+  });
 });
