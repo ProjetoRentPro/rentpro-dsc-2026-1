@@ -1,9 +1,10 @@
 import { Test } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
-import { EquipmentService, EQUIPMENT_REPOSITORY } from './equipment.service';
+import { EquipmentService } from './equipment.service';
+import { EQUIPMENT_REPOSITORY } from '../repositories/equipment.repository.interface';
 import type { IEquipmentRepository } from '../repositories/equipment.repository.interface';
-import { Equipment } from '../entities/equipment.entity';
-import { FindEquipmentByIdResponseDto } from '../dto/find-equipment-by-id-response.dto';
+import { EquipmentEntity } from '../entities/equipment.entity';
+import { StatusEquipamento } from '../enums/status-equipamento.enum';
 
 describe('EquipmentService', () => {
   let equipmentService: EquipmentService;
@@ -16,6 +17,9 @@ describe('EquipmentService', () => {
       findAll: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
+      findByCategoria: jest.fn(),
+      findByLocalizacao: jest.fn(),
+      findByFiltros: jest.fn(),
     };
 
     const module = await Test.createTestingModule({
@@ -33,27 +37,27 @@ describe('EquipmentService', () => {
     it('should throw NotFoundException when equipment does not exist', async () => {
       equipmentRepository.findById.mockResolvedValue(null);
 
-      await expect(equipmentService.findById(999)).rejects.toThrow(NotFoundException);
-      expect(equipmentRepository.findById).toHaveBeenCalledWith(999);
+      await expect(equipmentService.findById('uuid-999')).rejects.toThrow(NotFoundException);
+      expect(equipmentRepository.findById).toHaveBeenCalledWith('uuid-999');
     });
 
-    it('should return FindEquipmentByIdResponseDto when equipment exists', async () => {
-      const equipment = new Equipment({
-        equipamento_id: 1,
+    it('should return EquipmentEntity when equipment exists', async () => {
+      const equipment = new EquipmentEntity({
+        id: 'uuid-1',
         nome: 'Furadeira',
-        proprietario_id: 10,
+        proprietarioId: 'owner-uuid',
         descricao: 'Furadeira de impacto',
         categoria: 'Ferramentas',
-        preco_diaria: 50.0,
-        status: true,
+        precoDiaria: 50.0,
+        status: StatusEquipamento.DISPONIVEL,
       });
       equipmentRepository.findById.mockResolvedValue(equipment);
 
-      const result = await equipmentService.findById(1);
+      const result = await equipmentService.findById('uuid-1');
 
-      expect(result).toBeInstanceOf(FindEquipmentByIdResponseDto);
-      expect(result.equipamento_id).toBe(1);
-      expect(equipmentRepository.findById).toHaveBeenCalledWith(1);
+      expect(result).toBeInstanceOf(EquipmentEntity);
+      expect(result.id).toBe('uuid-1');
+      expect(equipmentRepository.findById).toHaveBeenCalledWith('uuid-1');
     });
   });
 });

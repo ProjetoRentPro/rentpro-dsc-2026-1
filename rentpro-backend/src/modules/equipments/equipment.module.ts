@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Equipment } from './entities/equipment.entity';
-import { EquipmentTypeORMRepository } from './repositories/equipment-type-orm.repository';
-import { EquipmentService, EQUIPMENT_REPOSITORY } from './services/equipment.service';
+import { EquipmentEntity } from './entities/equipment.entity';
 import { EquipmentController } from './equipment.controller';
+import { BuscarEquipamentosUseCase } from './use-cases/buscar-equipamentos.use-case';
+import { EQUIPMENT_REPOSITORY } from './repositories/equipment.repository.interface';
+import { EquipmentTypeORMRepository } from './repositories/equipment-type-orm.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Equipment])],
+  imports: [TypeOrmModule.forFeature([EquipmentEntity])],
+  controllers: [EquipmentController],
   providers: [
-    EquipmentService,
+    BuscarEquipamentosUseCase,
     {
       provide: EQUIPMENT_REPOSITORY,
       useClass: EquipmentTypeORMRepository,
     },
   ],
-  controllers: [EquipmentController],
-  exports: [EQUIPMENT_REPOSITORY, EquipmentService],
+  exports: [BuscarEquipamentosUseCase, EQUIPMENT_REPOSITORY],
 })
-export class EquipmentModule {}
+export class EquipmentsModule {}
