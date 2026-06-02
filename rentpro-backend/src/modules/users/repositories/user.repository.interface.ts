@@ -1,9 +1,12 @@
-import {User} from "../entities/user.entity";
+import { UserEntity } from '../entities/user.entity';
+
+export const USER_REPOSITORY = 'USER_REPOSITORY';
 
 export interface IUserRepository {
-    create(user: User): Promise<User>;
-    findById(user_id: number): Promise<User | null>;
-    findAll(): Promise<User[]>;
-    update(user: User): Promise<User>;
-    delete(user_id: number): Promise<void>;
+  create(entity: UserEntity): Promise<UserEntity>;
+  findById(id: number): Promise<UserEntity | null>;
+  findByEmail(email: string): Promise<UserEntity | null>;
+  findAll(): Promise<UserEntity[]>;
+  update(entity: UserEntity): Promise<UserEntity>;
+  delete(id: number): Promise<void>;
 }
