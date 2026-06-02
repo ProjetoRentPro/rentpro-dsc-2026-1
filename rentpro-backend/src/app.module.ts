@@ -5,12 +5,12 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RentEntity } from './modules/rent/entities/rent.entity';
-import { Equipment } from './modules/equipments/entities/equipment.entity';
+import { EquipmentEntity } from './modules/equipments/entities/equipment.entity';
 import { PaymentEntity } from './modules/payments/entities/payment.entity';
 import { UserEntity } from './modules/users/entities/user.entity';
 import { RentModule } from './modules/rent/rent.module';
 import { PaymentsModule } from './modules/payments/payments.module';
-import { EquipmentModule } from './modules/equipments/equipment.module';
+import { EquipmentsModule } from './modules/equipments/equipment.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 
@@ -26,13 +26,13 @@ import { AuthModule } from './modules/auth/auth.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [RentEntity, Equipment, PaymentEntity, UserEntity],
+        entities: [RentEntity, EquipmentEntity, PaymentEntity, UserEntity],
         synchronize: true,
       }),
     }),
     RentModule,
     PaymentsModule,
-    EquipmentModule,
+    EquipmentsModule,
     UsersModule,
     AuthModule,
   ],

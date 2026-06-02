@@ -1,8 +1,11 @@
+import { StatusEquipamento } from '../enums/status-equipamento.enum';
+
 export class CreateEquipmentDto {
   nome!: string;
-  proprietario_id!: number;
-  descricao!: string;
+  proprietarioId!: string;
+  descricao?: string;
   categoria!: string;
-  preco_diaria!: number;
-  status!: boolean;
+  localizacao!: string;
+  precoDiaria!: number;
+  status?: StatusEquipamento;
 }

@@ -13,7 +13,7 @@ export class EquipmentService {
   ) {}
 
   async create(dto: CreateEquipmentDto): Promise<EquipmentEntity> {
-    const equipment = new EquipmentEntity(dto as Partial<EquipmentEntity>);
+    const equipment = new EquipmentEntity({ ...dto });
     return this.equipmentRepository.create(equipment);
   }
 
