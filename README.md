@@ -19,7 +19,7 @@ Plataforma que conecta proprietários de equipamentos a clientes que necessitam 
 
 | # | Caso de Uso | Descrição |
 |---|-------------|-----------|
-| UC01 | Cadastrar Usuário | Criação de perfil com informações de contato e preferências |
+| UC01 | Gerenciar Usuário | Criação de perfil com informações de contato e preferências |
 | UC02 | Autenticar no Sistema | Login seguro utilizando autenticação JWT com tokens de acesso |
 | UC03 | Cadastrar Equipamento | Proprietários adicionam máquinas ao catálogo com especificações técnicas |
 | UC04 | Buscar Equipamentos | Pesquisa por categoria, localização ou características específicas |
