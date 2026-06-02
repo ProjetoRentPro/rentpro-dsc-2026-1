@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { IUserRepository, USER_REPOSITORY } from '../../users/repositories/user.repository.interface';
+import type { IUserRepository } from '../../users/repositories/user.repository.interface';
+import { USER_REPOSITORY } from '../../users/repositories/user.repository.interface';
 import { UserEntity } from '../../users/entities/user.entity';
 
 const BCRYPT_ROUNDS = 12; // RN05: custo mínimo 12

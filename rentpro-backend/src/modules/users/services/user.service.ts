@@ -5,7 +5,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { IUserRepository, USER_REPOSITORY } from '../repositories/user.repository.interface';
+import type { IUserRepository } from '../repositories/user.repository.interface';
+import { USER_REPOSITORY } from '../repositories/user.repository.interface';
 import { UserEntity } from '../entities/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';

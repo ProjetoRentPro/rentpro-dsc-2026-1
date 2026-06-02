@@ -1,25 +1,26 @@
-import { Equipment } from '../entities/equipment.entity';
+import { EquipmentEntity } from '../entities/equipment.entity';
+import { StatusEquipamento } from '../enums/status-equipamento.enum';
 
 export class FindEquipmentByIdResponseDto {
-  equipamento_id: number;
+  id: string;
   nome: string;
-  proprietario_id: number;
-  descricao: string;
+  proprietarioId: string;
+  descricao?: string;
   categoria: string;
-  preco_diaria: number;
-  status: boolean;
-  created_at: Date;
-  updated_at: Date;
+  localizacao: string;
+  precoDiaria: number;
+  status: StatusEquipamento;
+  createdAt: Date;
 
-  constructor(equipment: Equipment) {
-    this.equipamento_id = equipment.equipamento_id;
+  constructor(equipment: EquipmentEntity) {
+    this.id = equipment.id;
     this.nome = equipment.nome;
-    this.proprietario_id = equipment.proprietario_id;
+    this.proprietarioId = equipment.proprietarioId;
     this.descricao = equipment.descricao;
     this.categoria = equipment.categoria;
-    this.preco_diaria = equipment.preco_diaria;
+    this.localizacao = equipment.localizacao;
+    this.precoDiaria = equipment.precoDiaria;
     this.status = equipment.status;
-    this.created_at = equipment.created_at;
-    this.updated_at = equipment.updated_at;
+    this.createdAt = equipment.createdAt;
   }
 }
