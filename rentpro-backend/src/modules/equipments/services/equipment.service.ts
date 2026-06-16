@@ -17,6 +17,10 @@ export class EquipmentService {
     return this.equipmentRepository.create(equipment);
   }
 
+  async findAll(): Promise<EquipmentEntity[]> {
+    return this.equipmentRepository.findAll();
+  }
+
   async findById(id: string): Promise<EquipmentEntity> {
     const equipment = await this.equipmentRepository.findById(id);
     if (!equipment) {

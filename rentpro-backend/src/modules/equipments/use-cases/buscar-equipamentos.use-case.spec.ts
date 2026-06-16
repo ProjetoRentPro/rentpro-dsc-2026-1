@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing';
+﻿import { Test, TestingModule } from '@nestjs/testing';
 import { BuscarEquipamentosUseCase } from './buscar-equipamentos.use-case';
 import {
   EQUIPMENT_REPOSITORY,
@@ -7,21 +7,21 @@ import {
 import { EquipmentEntity } from '../entities/equipment.entity';
 import { StatusEquipamento } from '../enums/status-equipamento.enum';
 
-// ─── factory ─────────────────────────────────────────────────────────────────
+// â”€â”€â”€ factory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const makeEquipamento = (overrides: Partial<EquipmentEntity> = {}): EquipmentEntity =>
   new EquipmentEntity({
     id: 'uuid-1',
     nome: 'Betoneira 400L',
-    categoria: 'Construção',
+    categoria: 'ConstruÃ§Ã£o',
     localizacao: 'Curitiba - PR',
     status: StatusEquipamento.DISPONIVEL,
     precoDiaria: 150,
-    proprietarioId: 'owner-uuid',
+    proprietarioId: 1,
     ...overrides,
   });
 
-// ─── suite ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ suite â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 describe('BuscarEquipamentosUseCase', () => {
   let useCase: BuscarEquipamentosUseCase;
@@ -50,9 +50,9 @@ describe('BuscarEquipamentosUseCase', () => {
     repository = module.get(EQUIPMENT_REPOSITORY);
   });
 
-  // ── disponibilidade ───────────────────────────────────────────────────────
+  // â”€â”€ disponibilidade â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  it('deve retornar apenas equipamentos disponíveis', async () => {
+  it('deve retornar apenas equipamentos disponÃ­veis', async () => {
     repository.findByFiltros.mockResolvedValue([
       makeEquipamento({ status: StatusEquipamento.DISPONIVEL }),
     ]);
@@ -62,7 +62,7 @@ describe('BuscarEquipamentosUseCase', () => {
     expect(resultado.every(e => e.status === StatusEquipamento.DISPONIVEL)).toBe(true);
   });
 
-  it('deve filtrar equipamentos indisponíveis mesmo que o repositório os retorne', async () => {
+  it('deve filtrar equipamentos indisponÃ­veis mesmo que o repositÃ³rio os retorne', async () => {
     repository.findByFiltros.mockResolvedValue([
       makeEquipamento({ id: '1', status: StatusEquipamento.DISPONIVEL }),
       makeEquipamento({ id: '2', status: StatusEquipamento.INDISPONIVEL }),
@@ -74,19 +74,19 @@ describe('BuscarEquipamentosUseCase', () => {
     expect(resultado[0].id).toBe('1');
   });
 
-  // ── filtros ───────────────────────────────────────────────────────────────
+  // â”€â”€ filtros â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  it('deve aplicar filtro de categoria ao repositório', async () => {
-    repository.findByFiltros.mockResolvedValue([makeEquipamento({ categoria: 'Câmera' })]);
+  it('deve aplicar filtro de categoria ao repositÃ³rio', async () => {
+    repository.findByFiltros.mockResolvedValue([makeEquipamento({ categoria: 'CÃ¢mera' })]);
 
-    await useCase.execute({ categoria: 'Câmera' });
+    await useCase.execute({ categoria: 'CÃ¢mera' });
 
     expect(repository.findByFiltros).toHaveBeenCalledWith(
-      expect.objectContaining({ categoria: 'Câmera' }),
+      expect.objectContaining({ categoria: 'CÃ¢mera' }),
     );
   });
 
-  it('deve aplicar filtro de localização ao repositório', async () => {
+  it('deve aplicar filtro de localizaÃ§Ã£o ao repositÃ³rio', async () => {
     repository.findByFiltros.mockResolvedValue([makeEquipamento()]);
 
     await useCase.execute({ localizacao: 'Curitiba' });
@@ -96,19 +96,19 @@ describe('BuscarEquipamentosUseCase', () => {
     );
   });
 
-  it('deve aplicar filtros combinados (categoria + localização)', async () => {
+  it('deve aplicar filtros combinados (categoria + localizaÃ§Ã£o)', async () => {
     repository.findByFiltros.mockResolvedValue([makeEquipamento()]);
 
-    await useCase.execute({ categoria: 'Câmera', localizacao: 'Curitiba' });
+    await useCase.execute({ categoria: 'CÃ¢mera', localizacao: 'Curitiba' });
 
     expect(repository.findByFiltros).toHaveBeenCalledWith(
-      expect.objectContaining({ categoria: 'Câmera', localizacao: 'Curitiba' }),
+      expect.objectContaining({ categoria: 'CÃ¢mera', localizacao: 'Curitiba' }),
     );
   });
 
-  // ── lista vazia ───────────────────────────────────────────────────────────
+  // â”€â”€ lista vazia â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  it('deve retornar lista vazia quando não houver resultados', async () => {
+  it('deve retornar lista vazia quando nÃ£o houver resultados', async () => {
     repository.findByFiltros.mockResolvedValue([]);
 
     const resultado = await useCase.execute({ categoria: 'Inexistente' });
@@ -116,9 +116,9 @@ describe('BuscarEquipamentosUseCase', () => {
     expect(resultado).toEqual([]);
   });
 
-  // ── resposta sem campos sensíveis ─────────────────────────────────────────
+  // â”€â”€ resposta sem campos sensÃ­veis â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  it('não deve expor proprietarioId na resposta', async () => {
+  it('nÃ£o deve expor proprietarioId na resposta', async () => {
     repository.findByFiltros.mockResolvedValue([makeEquipamento()]);
 
     const resultado = await useCase.execute({});

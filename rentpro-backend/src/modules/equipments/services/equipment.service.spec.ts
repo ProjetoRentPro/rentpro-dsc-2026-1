@@ -1,4 +1,4 @@
-import { Test } from '@nestjs/testing';
+﻿import { Test } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
 import { EquipmentService } from './equipment.service';
 import { EQUIPMENT_REPOSITORY } from '../repositories/equipment.repository.interface';
@@ -45,7 +45,7 @@ describe('EquipmentService', () => {
       const equipment = new EquipmentEntity({
         id: 'uuid-1',
         nome: 'Furadeira',
-        proprietarioId: 'owner-uuid',
+        proprietarioId: 1,
         descricao: 'Furadeira de impacto',
         categoria: 'Ferramentas',
         precoDiaria: 50.0,

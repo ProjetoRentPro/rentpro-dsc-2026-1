@@ -11,8 +11,8 @@ export class EquipmentEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'equipamento_id' })
   id!: string;
 
-  @Column({ name: 'proprietario_id', type: 'uuid' })
-  proprietarioId!: string;
+  @Column({ name: 'proprietario_id', type: 'int' })
+  proprietarioId!: number;
 
   @Column({ name: 'nome', type: 'varchar', length: 255 })
   nome!: string;

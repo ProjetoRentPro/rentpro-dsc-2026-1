@@ -4,7 +4,7 @@ import { StatusEquipamento } from '../enums/status-equipamento.enum';
 export class FindEquipmentByIdResponseDto {
   id: string;
   nome: string;
-  proprietarioId: string;
+  proprietarioId: number;
   descricao?: string;
   categoria: string;
   localizacao: string;
