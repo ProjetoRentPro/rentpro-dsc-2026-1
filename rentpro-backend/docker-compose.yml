@@ -1,15 +1,35 @@
-services: 
+services:
+  api:
+    build: .
+    container_name: rentpro-api
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
   postgres:
-    image: postgres:latest
+    image: postgres:17
     container_name: rentpro-postgres
     environment:
-      POSTGRES_USER: luiz
-      POSTGRES_PASSWORD: luiz
-      POSTGRES_DB: rentpro_db
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    
+    restart: unless-stopped
+
 volumes:
   postgres_data:
