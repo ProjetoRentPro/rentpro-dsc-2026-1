@@ -1,0 +1,83 @@
+/* Header fixo no topo */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  height: 64px;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Brand */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.header-logo { font-size: 1.4rem; }
+.header-name { font-size: 1.15rem; font-weight: 700; color: #1a3a5c; }
+
+/* Nav */
+.header-nav {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+}
+.header-nav a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: #4b5563;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.header-nav a:hover { color: #2563eb; }
+
+/* Actions — sempre à direita */
+.header-actions { margin-left: auto; flex-shrink: 0; }
+
+/* Botão entrar */
+.btn-login {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-login:hover { background: #1d4ed8; }
+
+/* Botão sair */
+.btn-logout {
+  background: none;
+  color: #ef4444;
+  border: 1.5px solid #ef4444;
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-logout:hover { background: #fef2f2; }
+
+@media (max-width: 640px) {
+  .header-nav { display: none; }
+}

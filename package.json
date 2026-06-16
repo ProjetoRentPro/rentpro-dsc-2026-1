@@ -1,4 +1,7 @@
 {
+	"scripts": {
+		"dev": "npm run dev --prefix rentpro-frontend"
+	},
 	"dependencies": {
 		"nest": "^0.1.6"
 	},
