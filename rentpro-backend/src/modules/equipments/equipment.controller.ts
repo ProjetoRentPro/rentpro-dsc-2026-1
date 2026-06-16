@@ -4,6 +4,7 @@ import { EquipmentService } from './services/equipment.service';
 import { CreateEquipmentDto } from './dto/create-equipment.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
 import { FindEquipmentByIdResponseDto } from './dto/find-equipment-by-id-response.dto';
+import { EquipmentEntity } from './entities/equipment.entity';
 
 @ApiTags('Equipamentos')
 @ApiBearerAuth()
@@ -18,6 +19,13 @@ export class EquipmentController {
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   async create(@Body() dto: CreateEquipmentDto) {
     return this.equipmentService.create(dto);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Listar todos os equipamentos disponíveis' })
+  @ApiResponse({ status: 200, description: 'Lista de equipamentos' })
+  async findAll(): Promise<EquipmentEntity[]> {
+    return this.equipmentService.findAll();
   }
 
   @Get(':id')
