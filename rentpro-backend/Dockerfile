@@ -4,6 +4,8 @@ WORKDIR /app
 
 RUN corepack enable
 
+ENV npm_config_minimum_release_age=0
+
 COPY package.json pnpm-lock.yaml .npmrc ./
 
 RUN pnpm install --frozen-lockfile
@@ -19,6 +21,8 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 RUN corepack enable
+
+ENV npm_config_minimum_release_age=0
 
 COPY package.json pnpm-lock.yaml .npmrc ./
 
