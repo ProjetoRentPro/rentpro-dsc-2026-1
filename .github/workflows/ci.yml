@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+defaults:
+  run:
+    working-directory: rentpro-backend
+
+jobs:
+  validate:
+    name: Validar aplicação e imagem Docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: rentpro-backend/pnpm-lock.yaml
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Executar lint
+        run: pnpm lint
+
+      - name: Executar testes
+        run: pnpm test
+
+      - name: Executar build da aplicação
+        run: pnpm build
+
+      - name: Construir imagem Docker
+        run: docker build -t rentpro-api:ci .
