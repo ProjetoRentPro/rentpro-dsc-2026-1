@@ -3,7 +3,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UnauthorizedException } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy, JwtPayload } from './jwt.strategy';
 import { USER_REPOSITORY } from '../../users/repositories/user.repository.interface';
 import { UserEntity } from '../../users/entities/user.entity';
 import { UserRole } from '../../../commons/enums/user-role.enum';
@@ -40,7 +40,10 @@ describe('AuthService — login() e JwtStrategy', () => {
     const module = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({ isGlobal: true }),
-        JwtModule.register({ secret: 'test-secret', signOptions: { expiresIn: '1d' } }),
+        JwtModule.register({
+          secret: 'test-secret',
+          signOptions: { expiresIn: '1d' },
+        }),
       ],
       providers: [
         AuthService,
@@ -75,17 +78,22 @@ describe('AuthService — login() e JwtStrategy', () => {
       const user = makeUserSemSenha() as Omit<UserEntity, 'senhaHash'>;
 
       const { access_token } = await authService.login(user);
-      const payload = jwtService.decode(access_token) as Record<string, any>;
+      const payload = jwtService.decode<{ sub: number; email: string }>(
+        access_token,
+      );
 
       expect(payload.sub).toBe(user.id);
       expect(payload.email).toBe(user.email);
     });
 
     it('deve embutir o tipo (role) no payload do token', async () => {
-      const user = makeUserSemSenha({ tipo: UserRole.ADMIN }) as Omit<UserEntity, 'senhaHash'>;
+      const user = makeUserSemSenha({ tipo: UserRole.ADMIN }) as Omit<
+        UserEntity,
+        'senhaHash'
+      >;
 
       const { access_token } = await authService.login(user);
-      const payload = jwtService.decode(access_token) as Record<string, any>;
+      const payload = jwtService.decode<{ tipo: UserRole }>(access_token);
 
       expect(payload.tipo).toBe(UserRole.ADMIN);
     });
@@ -95,7 +103,11 @@ describe('AuthService — login() e JwtStrategy', () => {
 
   describe('JwtStrategy.validate()', () => {
     it('deve retornar o payload quando o token for válido', async () => {
-      const payload = { sub: 1, email: 'joao@email.com', tipo: UserRole.CLIENTE };
+      const payload = {
+        sub: 1,
+        email: 'joao@email.com',
+        tipo: UserRole.CLIENTE,
+      };
 
       const resultado = await jwtStrategy.validate(payload);
 
@@ -106,7 +118,7 @@ describe('AuthService — login() e JwtStrategy', () => {
       const payloadInvalido = { email: 'joao@email.com' };
 
       await expect(
-        jwtStrategy.validate(payloadInvalido as any),
+        jwtStrategy.validate(payloadInvalido as unknown as JwtPayload),
       ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -114,7 +126,7 @@ describe('AuthService — login() e JwtStrategy', () => {
       const payloadInvalido = { sub: 1 };
 
       await expect(
-        jwtStrategy.validate(payloadInvalido as any),
+        jwtStrategy.validate(payloadInvalido as unknown as JwtPayload),
       ).rejects.toThrow(UnauthorizedException);
     });
   });

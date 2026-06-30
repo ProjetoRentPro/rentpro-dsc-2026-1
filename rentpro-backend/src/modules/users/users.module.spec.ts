@@ -9,8 +9,11 @@ import { USER_REPOSITORY } from './repositories/user.repository.interface';
 describe('UsersModule', () => {
   it('deve compilar o módulo sem erros', async () => {
     const repoMock = {
-      create: jest.fn(), findOne: jest.fn(), find: jest.fn(),
-      save: jest.fn(), softDelete: jest.fn(),
+      create: jest.fn(),
+      findOne: jest.fn(),
+      find: jest.fn(),
+      save: jest.fn(),
+      softDelete: jest.fn(),
     };
 
     const module = await Test.createTestingModule({
@@ -25,8 +28,11 @@ describe('UsersModule', () => {
 
   it('deve expor UserService', async () => {
     const repoMock = {
-      create: jest.fn(), findOne: jest.fn(), find: jest.fn(),
-      save: jest.fn(), softDelete: jest.fn(),
+      create: jest.fn(),
+      findOne: jest.fn(),
+      find: jest.fn(),
+      save: jest.fn(),
+      softDelete: jest.fn(),
     };
 
     const module = await Test.createTestingModule({
@@ -42,8 +48,11 @@ describe('UsersModule', () => {
 
   it('deve expor UserController', async () => {
     const repoMock = {
-      create: jest.fn(), findOne: jest.fn(), find: jest.fn(),
-      save: jest.fn(), softDelete: jest.fn(),
+      create: jest.fn(),
+      findOne: jest.fn(),
+      find: jest.fn(),
+      save: jest.fn(),
+      softDelete: jest.fn(),
     };
 
     const module = await Test.createTestingModule({
@@ -59,8 +68,11 @@ describe('UsersModule', () => {
 
   it('deve registrar USER_REPOSITORY', async () => {
     const repoMock = {
-      create: jest.fn(), findOne: jest.fn(), find: jest.fn(),
-      save: jest.fn(), softDelete: jest.fn(),
+      create: jest.fn(),
+      findOne: jest.fn(),
+      find: jest.fn(),
+      save: jest.fn(),
+      softDelete: jest.fn(),
     };
 
     const module = await Test.createTestingModule({
@@ -70,7 +82,7 @@ describe('UsersModule', () => {
       .useValue(repoMock)
       .compile();
 
-    const repo = module.get(USER_REPOSITORY);
+    const repo: unknown = module.get(USER_REPOSITORY);
     expect(repo).toBeDefined();
   });
 });

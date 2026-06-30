@@ -30,12 +30,14 @@ export class AuthService {
     if (!senhaValida) return null;
 
     // Remove senhaHash antes de retornar
-    const { senhaHash: _, ...userSemSenha } = user;
+    const { senhaHash: _senhaHash, ...userSemSenha } = user;
     return userSemSenha as Omit<UserEntity, 'senhaHash'>;
   }
 
-  async login(user: Omit<UserEntity, 'senhaHash'>): Promise<{ access_token: string }> {
+  login(
+    user: Omit<UserEntity, 'senhaHash'>,
+  ): Promise<{ access_token: string }> {
     const payload = { sub: user.id, email: user.email, tipo: user.tipo };
-    return { access_token: this.jwtService.sign(payload) };
+    return Promise.resolve({ access_token: this.jwtService.sign(payload) });
   }
 }

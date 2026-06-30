@@ -81,7 +81,10 @@ describe('UserController', () => {
 
   describe('findAll()', () => {
     it('deve retornar a lista de usuários', async () => {
-      const usuarios = [makeUser({ id: 1 }), makeUser({ id: 2, email: 'maria@email.com' })];
+      const usuarios = [
+        makeUser({ id: 1 }),
+        makeUser({ id: 2, email: 'maria@email.com' }),
+      ];
       service.findAll.mockResolvedValue(usuarios);
 
       const resultado = await controller.findAll();
@@ -134,7 +137,9 @@ describe('UserController', () => {
     it('deve propagar NotFoundException se o usuário não existir', async () => {
       service.update.mockRejectedValue(new NotFoundException());
 
-      await expect(controller.update(999, { nome: 'X' })).rejects.toThrow(NotFoundException);
+      await expect(controller.update(999, { nome: 'X' })).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 

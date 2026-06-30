@@ -96,7 +96,10 @@ describe('IUserRepository (contrato)', () => {
   // ── findAll ───────────────────────────────────────────────────────────────
 
   it('findAll() deve retornar uma lista de usuários', async () => {
-    const usuarios = [makeUser({ id: 1 }), makeUser({ id: 2, email: 'maria@email.com' })];
+    const usuarios = [
+      makeUser({ id: 1 }),
+      makeUser({ id: 2, email: 'maria@email.com' }),
+    ];
     repository.findAll.mockResolvedValue(usuarios);
 
     const resultado = await repository.findAll();

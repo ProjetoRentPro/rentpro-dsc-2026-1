@@ -1,7 +1,10 @@
 import { Test } from '@nestjs/testing';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { UserService } from './user.service';
-import { IUserRepository, USER_REPOSITORY } from '../repositories/user.repository.interface';
+import {
+  IUserRepository,
+  USER_REPOSITORY,
+} from '../repositories/user.repository.interface';
 import { UserEntity } from '../entities/user.entity';
 import { UserRole } from '../../../commons/enums/user-role.enum';
 
@@ -70,9 +73,9 @@ describe('UserService', () => {
       repository.findByEmail.mockResolvedValue(null);
 
       let senhaHashCapturada: string | undefined;
-      repository.create.mockImplementation(async (entity) => {
+      repository.create.mockImplementation((entity) => {
         senhaHashCapturada = entity.senhaHash;
-        return makeUser({ senhaHash: entity.senhaHash });
+        return Promise.resolve(makeUser({ senhaHash: entity.senhaHash }));
       });
 
       await service.create({
@@ -126,7 +129,10 @@ describe('UserService', () => {
 
   describe('findAll()', () => {
     it('deve retornar a lista de usuários', async () => {
-      const usuarios = [makeUser({ id: 1 }), makeUser({ id: 2, email: 'maria@email.com' })];
+      const usuarios = [
+        makeUser({ id: 1 }),
+        makeUser({ id: 2, email: 'maria@email.com' }),
+      ];
       repository.findAll.mockResolvedValue(usuarios);
 
       const resultado = await service.findAll();
@@ -163,7 +169,9 @@ describe('UserService', () => {
     it('deve lançar NotFoundException se o usuário não existir', async () => {
       repository.findById.mockResolvedValue(null);
 
-      await expect(service.update(999, { nome: 'Novo' })).rejects.toThrow(NotFoundException);
+      await expect(service.update(999, { nome: 'Novo' })).rejects.toThrow(
+        NotFoundException,
+      );
 
       expect(repository.update).not.toHaveBeenCalled();
     });

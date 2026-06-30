@@ -34,7 +34,6 @@ describe('EquipmentEntity', () => {
   });
 
   it('deve ter status DISPONIVEL como valor padrÃ£o', () => {
-    const entity = new EquipmentEntity({ nome: 'Escavadeira' });
     // O default Ã© aplicado pelo TypeORM na persistÃªncia,
     // mas o enum deve estar disponÃ­vel na entidade
     expect(Object.values(StatusEquipamento)).toContain(
@@ -46,7 +45,9 @@ describe('EquipmentEntity', () => {
     const semDescricao = new EquipmentEntity({ nome: 'Serra' });
     expect(semDescricao.descricao).toBeUndefined();
 
-    const comDescricao = new EquipmentEntity({ descricao: 'Serra circular 7 1/4"' });
+    const comDescricao = new EquipmentEntity({
+      descricao: 'Serra circular 7 1/4"',
+    });
     expect(comDescricao.descricao).toBe('Serra circular 7 1/4"');
   });
 });

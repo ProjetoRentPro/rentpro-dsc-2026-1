@@ -15,13 +15,15 @@ export class BuscarEquipamentosUseCase {
     private readonly repository: IEquipmentRepository,
   ) {}
 
-  async execute(filtros: BuscarEquipamentoDto): Promise<EquipmentResponseDto[]> {
+  async execute(
+    filtros: BuscarEquipamentoDto,
+  ): Promise<EquipmentResponseDto[]> {
     const equipamentos = await this.repository.findByFiltros(filtros);
 
     // Garantia extra: nunca expõe indisponíveis mesmo que o repositório falhe no filtro
     return equipamentos
-      .filter(e => e.status === StatusEquipamento.DISPONIVEL)
-      .map(e => this.toResponseDto(e));
+      .filter((e) => e.status === StatusEquipamento.DISPONIVEL)
+      .map((e) => this.toResponseDto(e));
   }
 
   private toResponseDto(entity: EquipmentEntity): EquipmentResponseDto {

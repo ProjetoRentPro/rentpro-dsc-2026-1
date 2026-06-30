@@ -38,7 +38,9 @@ describe('PaymentsService', () => {
       const id = '00000000-0000-0000-0000-000000000000';
       paymentRepository.findById.mockResolvedValue(null);
 
-      await expect(paymentsService.findById(id)).rejects.toThrow(NotFoundException);
+      await expect(paymentsService.findById(id)).rejects.toThrow(
+        NotFoundException,
+      );
       expect(paymentRepository.findById).toHaveBeenCalledWith(id);
     });
 

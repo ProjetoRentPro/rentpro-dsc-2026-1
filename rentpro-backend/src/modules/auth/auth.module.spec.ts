@@ -8,8 +8,11 @@ import { UserEntity } from '../users/entities/user.entity';
 
 describe('AuthModule', () => {
   const repoMock = {
-    create: jest.fn(), findOne: jest.fn(), find: jest.fn(),
-    save: jest.fn(), softDelete: jest.fn(),
+    create: jest.fn(),
+    findOne: jest.fn(),
+    find: jest.fn(),
+    save: jest.fn(),
+    softDelete: jest.fn(),
   };
 
   it('deve compilar o módulo sem erros', async () => {

@@ -9,7 +9,9 @@ import { StatusEquipamento } from '../enums/status-equipamento.enum';
 
 // â”€â”€â”€ factory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-const makeEquipamento = (overrides: Partial<EquipmentEntity> = {}): EquipmentEntity =>
+const makeEquipamento = (
+  overrides: Partial<EquipmentEntity> = {},
+): EquipmentEntity =>
   new EquipmentEntity({
     id: 'uuid-1',
     nome: 'Betoneira 400L',
@@ -59,7 +61,9 @@ describe('BuscarEquipamentosUseCase', () => {
 
     const resultado = await useCase.execute({});
 
-    expect(resultado.every(e => e.status === StatusEquipamento.DISPONIVEL)).toBe(true);
+    expect(
+      resultado.every((e) => e.status === StatusEquipamento.DISPONIVEL),
+    ).toBe(true);
   });
 
   it('deve filtrar equipamentos indisponÃ­veis mesmo que o repositÃ³rio os retorne', async () => {
@@ -77,7 +81,9 @@ describe('BuscarEquipamentosUseCase', () => {
   // â”€â”€ filtros â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   it('deve aplicar filtro de categoria ao repositÃ³rio', async () => {
-    repository.findByFiltros.mockResolvedValue([makeEquipamento({ categoria: 'CÃ¢mera' })]);
+    repository.findByFiltros.mockResolvedValue([
+      makeEquipamento({ categoria: 'CÃ¢mera' }),
+    ]);
 
     await useCase.execute({ categoria: 'CÃ¢mera' });
 
@@ -102,7 +108,10 @@ describe('BuscarEquipamentosUseCase', () => {
     await useCase.execute({ categoria: 'CÃ¢mera', localizacao: 'Curitiba' });
 
     expect(repository.findByFiltros).toHaveBeenCalledWith(
-      expect.objectContaining({ categoria: 'CÃ¢mera', localizacao: 'Curitiba' }),
+      expect.objectContaining({
+        categoria: 'CÃ¢mera',
+        localizacao: 'Curitiba',
+      }),
     );
   });
 

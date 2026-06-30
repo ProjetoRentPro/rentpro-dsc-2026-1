@@ -2,7 +2,10 @@ import { Test } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
-import { IUserRepository, USER_REPOSITORY } from '../../users/repositories/user.repository.interface';
+import {
+  IUserRepository,
+  USER_REPOSITORY,
+} from '../../users/repositories/user.repository.interface';
 import { UserEntity } from '../../users/entities/user.entity';
 import { UserRole } from '../../../commons/enums/user-role.enum';
 
@@ -36,7 +39,10 @@ describe('AuthService', () => {
 
     const module = await Test.createTestingModule({
       imports: [
-        JwtModule.register({ secret: 'test-secret', signOptions: { expiresIn: '1d' } }),
+        JwtModule.register({
+          secret: 'test-secret',
+          signOptions: { expiresIn: '1d' },
+        }),
       ],
       providers: [
         AuthService,
@@ -89,7 +95,10 @@ describe('AuthService', () => {
       const usuario = makeUser({ senhaHash: hash });
       repository.findByEmail.mockResolvedValue(usuario);
 
-      const resultado = await service.validateUser('joao@email.com', senhaPlana);
+      const resultado = await service.validateUser(
+        'joao@email.com',
+        senhaPlana,
+      );
 
       expect(resultado).not.toBeNull();
       expect(resultado!.email).toBe('joao@email.com');
@@ -98,10 +107,15 @@ describe('AuthService', () => {
     it('deve retornar null quando o email não existir', async () => {
       repository.findByEmail.mockResolvedValue(null);
 
-      const resultado = await service.validateUser('inexistente@email.com', 'qualquer');
+      const resultado = await service.validateUser(
+        'inexistente@email.com',
+        'qualquer',
+      );
 
       expect(resultado).toBeNull();
-      expect(repository.findByEmail).toHaveBeenCalledWith('inexistente@email.com');
+      expect(repository.findByEmail).toHaveBeenCalledWith(
+        'inexistente@email.com',
+      );
     });
 
     it('deve retornar null quando a senha estiver incorreta', async () => {
@@ -109,7 +123,10 @@ describe('AuthService', () => {
       const usuario = makeUser({ senhaHash: hash });
       repository.findByEmail.mockResolvedValue(usuario);
 
-      const resultado = await service.validateUser('joao@email.com', 'senha_errada');
+      const resultado = await service.validateUser(
+        'joao@email.com',
+        'senha_errada',
+      );
 
       expect(resultado).toBeNull();
     });
@@ -120,10 +137,13 @@ describe('AuthService', () => {
       const usuario = makeUser({ senhaHash: hash });
       repository.findByEmail.mockResolvedValue(usuario);
 
-      const resultado = await service.validateUser('joao@email.com', senhaPlana);
+      const resultado = await service.validateUser(
+        'joao@email.com',
+        senhaPlana,
+      );
 
       expect(resultado).not.toBeNull();
-      expect((resultado as any).senhaHash).toBeUndefined();
+      expect((resultado as { senhaHash?: unknown }).senhaHash).toBeUndefined();
     });
   });
 });

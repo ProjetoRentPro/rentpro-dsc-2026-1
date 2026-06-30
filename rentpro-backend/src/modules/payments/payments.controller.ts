@@ -1,5 +1,10 @@
 import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PaymentsService } from './services/payments.service';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { FindPaymentByIdResponseDto } from './dto/find-payment-by-id-response.dto';
@@ -22,10 +27,7 @@ export class PaymentsController {
   @ApiOperation({ summary: 'Atualizar pagamento' })
   @ApiResponse({ status: 200, description: 'Pagamento atualizado' })
   @ApiResponse({ status: 404, description: 'Pagamento não encontrado' })
-  async update(
-    @Param('id') id: string,
-    @Body() dto: UpdatePaymentDto,
-  ) {
+  async update(@Param('id') id: string, @Body() dto: UpdatePaymentDto) {
     return this.paymentsService.update(id, dto);
   }
 }

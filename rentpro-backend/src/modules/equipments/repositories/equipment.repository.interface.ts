@@ -1,7 +1,6 @@
 import { EquipmentEntity } from '../entities/equipment.entity';
 import { BuscarEquipamentoDto } from '../dto/buscar-equipamento.dto';
 
-
 export const EQUIPMENT_REPOSITORY = 'EQUIPMENT_REPOSITORY';
 
 export interface IEquipmentRepository {

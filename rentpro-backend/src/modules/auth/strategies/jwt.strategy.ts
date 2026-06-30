@@ -19,10 +19,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload): Promise<JwtPayload> {
+  validate(payload: JwtPayload): Promise<JwtPayload> {
     if (!payload?.sub || !payload?.email) {
-      throw new UnauthorizedException('Token inválido');
+      return Promise.reject(new UnauthorizedException('Token inválido'));
     }
-    return payload;
+    return Promise.resolve(payload);
   }
 }

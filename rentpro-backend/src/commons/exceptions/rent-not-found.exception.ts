@@ -1,4 +1,4 @@
-import {NotFoundException} from "@nestjs/common";
+import { NotFoundException } from '@nestjs/common';
 
 export class RentNotFoundException extends NotFoundException {
   constructor(reserva_id: string) {

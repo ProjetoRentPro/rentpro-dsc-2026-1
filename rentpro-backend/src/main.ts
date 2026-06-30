@@ -50,4 +50,4 @@ async function bootstrap() {
     console.log(`Swagger disponivel em http://localhost:${port}/api/docs`);
   }
 }
-bootstrap();
+void bootstrap();

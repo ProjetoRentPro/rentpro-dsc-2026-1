@@ -1,4 +1,12 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Min } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  Min,
+} from 'class-validator';
 import { StatusEquipamento } from '../enums/status-equipamento.enum';
 
 export class CreateEquipmentDto {

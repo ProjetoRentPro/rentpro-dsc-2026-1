@@ -37,7 +37,9 @@ describe('EquipmentService', () => {
     it('should throw NotFoundException when equipment does not exist', async () => {
       equipmentRepository.findById.mockResolvedValue(null);
 
-      await expect(equipmentService.findById('uuid-999')).rejects.toThrow(NotFoundException);
+      await expect(equipmentService.findById('uuid-999')).rejects.toThrow(
+        NotFoundException,
+      );
       expect(equipmentRepository.findById).toHaveBeenCalledWith('uuid-999');
     });
 

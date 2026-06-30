@@ -10,4 +10,3 @@ export class AppService {
     return 'Projeto de estudo utilizando NestJS, TypeScript, Prisma e PostgreSQL';
   }*/
 }
-

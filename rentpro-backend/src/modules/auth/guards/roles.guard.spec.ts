@@ -8,7 +8,9 @@ import { UserRole } from '../../../commons/enums/user-role.enum';
 
 const makeContext = (userTipo?: UserRole): ExecutionContext => {
   const request = {
-    user: userTipo ? { sub: 1, email: 'joao@email.com', tipo: userTipo } : undefined,
+    user: userTipo
+      ? { sub: 1, email: 'joao@email.com', tipo: userTipo }
+      : undefined,
   };
   return {
     switchToHttp: () => ({ getRequest: () => request }),
@@ -73,14 +75,17 @@ describe('RolesGuard', () => {
 
     guard.canActivate(ctx);
 
-    expect(reflector.getAllAndOverride).toHaveBeenCalledWith(
-      ROLES_KEY,
-      [ctx.getHandler(), ctx.getClass()],
-    );
+    expect(reflector.getAllAndOverride).toHaveBeenCalledWith(ROLES_KEY, [
+      ctx.getHandler(),
+      ctx.getClass(),
+    ]);
   });
 
   it('deve permitir acesso quando o usuário tiver uma das roles aceitas', () => {
-    reflector.getAllAndOverride.mockReturnValue([UserRole.ADMIN, UserRole.CLIENTE]);
+    reflector.getAllAndOverride.mockReturnValue([
+      UserRole.ADMIN,
+      UserRole.CLIENTE,
+    ]);
     const ctx = makeContext(UserRole.CLIENTE);
 
     const resultado = guard.canActivate(ctx);

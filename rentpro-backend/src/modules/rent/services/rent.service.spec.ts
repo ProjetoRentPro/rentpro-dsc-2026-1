@@ -35,7 +35,9 @@ describe('RentService', () => {
       const reservaId = '00000000-0000-0000-0000-000000000000';
       rentRepository.findById.mockResolvedValue(null);
 
-      await expect(rentService.findById(reservaId)).rejects.toThrow(RentNotFoundException);
+      await expect(rentService.findById(reservaId)).rejects.toThrow(
+        RentNotFoundException,
+      );
       expect(rentRepository.findById).toHaveBeenCalledWith(reservaId);
     });
 

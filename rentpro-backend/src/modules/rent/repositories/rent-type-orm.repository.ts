@@ -1,8 +1,8 @@
-﻿import { InjectRepository } from "@nestjs/typeorm";
-import { IRentRepository } from "./rent.repository.interface";
-import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
-import { RentEntity } from "../entities/rent.entity";
-import { Repository } from "typeorm";
+﻿import { InjectRepository } from '@nestjs/typeorm';
+import { IRentRepository } from './rent.repository.interface';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
+import { RentEntity } from '../entities/rent.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class RentTypeORMRepository implements IRentRepository {
@@ -16,8 +16,8 @@ export class RentTypeORMRepository implements IRentRepository {
   }
 
   async findById(reserva_id: string): Promise<RentEntity | null> {
-    return this.repository.findOne({ 
-        where: { reservaId: reserva_id },
+    return this.repository.findOne({
+      where: { reservaId: reserva_id },
     });
   }
 

@@ -8,15 +8,16 @@ import { UserEntity } from '../users/entities/user.entity';
 
 // ─── factory helper ───────────────────────────────────────────────────────────
 
-const makeUserSemSenha = (overrides = {}): Omit<UserEntity, 'senhaHash'> => ({
-  id: 1,
-  nome: 'João Silva',
-  email: 'joao@email.com',
-  tipo: UserRole.CLIENTE,
-  createdAt: new Date('2026-01-01'),
-  updatedAt: new Date('2026-01-01'),
-  ...overrides,
-} as Omit<UserEntity, 'senhaHash'>);
+const makeUserSemSenha = (overrides = {}): Omit<UserEntity, 'senhaHash'> =>
+  ({
+    id: 1,
+    nome: 'João Silva',
+    email: 'joao@email.com',
+    tipo: UserRole.CLIENTE,
+    createdAt: new Date('2026-01-01'),
+    updatedAt: new Date('2026-01-01'),
+    ...overrides,
+  }) as Omit<UserEntity, 'senhaHash'>;
 
 // ─── suite ────────────────────────────────────────────────────────────────────
 
@@ -50,7 +51,10 @@ describe('AuthController', () => {
 
       const resultado = await controller.login(dto);
 
-      expect(service.validateUser).toHaveBeenCalledWith('joao@email.com', 'senha123');
+      expect(service.validateUser).toHaveBeenCalledWith(
+        'joao@email.com',
+        'senha123',
+      );
       expect(service.login).toHaveBeenCalledTimes(1);
       expect(resultado).toHaveProperty('access_token');
       expect(resultado.access_token).toBe('jwt.token.aqui');
@@ -80,7 +84,10 @@ describe('AuthController', () => {
 
       await controller.login({ email: 'joao@email.com', senha: 'senha123' });
 
-      expect(service.validateUser).toHaveBeenCalledWith('joao@email.com', 'senha123');
+      expect(service.validateUser).toHaveBeenCalledWith(
+        'joao@email.com',
+        'senha123',
+      );
     });
   });
 });

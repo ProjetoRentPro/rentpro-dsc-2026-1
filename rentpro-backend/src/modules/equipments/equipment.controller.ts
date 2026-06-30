@@ -1,5 +1,20 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { EquipmentService } from './services/equipment.service';
 import { CreateEquipmentDto } from './dto/create-equipment.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
@@ -32,7 +47,9 @@ export class EquipmentController {
   @ApiOperation({ summary: 'Buscar equipamento por ID' })
   @ApiResponse({ status: 200, description: 'Equipamento encontrado' })
   @ApiResponse({ status: 404, description: 'Equipamento não encontrado' })
-  async findById(@Param('id') id: string): Promise<FindEquipmentByIdResponseDto> {
+  async findById(
+    @Param('id') id: string,
+  ): Promise<FindEquipmentByIdResponseDto> {
     const equipment = await this.equipmentService.findById(id);
     return new FindEquipmentByIdResponseDto(equipment);
   }
@@ -41,10 +58,7 @@ export class EquipmentController {
   @ApiOperation({ summary: 'Atualizar equipamento' })
   @ApiResponse({ status: 200, description: 'Equipamento atualizado' })
   @ApiResponse({ status: 404, description: 'Equipamento não encontrado' })
-  async update(
-    @Param('id') id: string,
-    @Body() dto: UpdateEquipmentDto,
-  ) {
+  async update(@Param('id') id: string, @Body() dto: UpdateEquipmentDto) {
     return this.equipmentService.update(id, dto);
   }
 

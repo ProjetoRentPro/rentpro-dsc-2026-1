@@ -1,12 +1,17 @@
 ﻿import { Test, TestingModule } from '@nestjs/testing';
-import { IEquipmentRepository, EQUIPMENT_REPOSITORY } from './equipment.repository.interface';
+import {
+  IEquipmentRepository,
+  EQUIPMENT_REPOSITORY,
+} from './equipment.repository.interface';
 import { EquipmentEntity } from '../entities/equipment.entity';
 import { StatusEquipamento } from '../enums/status-equipamento.enum';
 import { BuscarEquipamentoDto } from '../dto/buscar-equipamento.dto';
 
 // â”€â”€â”€ factory helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-const makeEquipamento = (overrides: Partial<EquipmentEntity> = {}): EquipmentEntity =>
+const makeEquipamento = (
+  overrides: Partial<EquipmentEntity> = {},
+): EquipmentEntity =>
   new EquipmentEntity({
     id: 'uuid-1',
     nome: 'Betoneira 400L',
@@ -39,7 +44,8 @@ describe('IEquipmentRepository â€” busca por filtros', () => {
       providers: [{ provide: EQUIPMENT_REPOSITORY, useValue: mock }],
     }).compile();
 
-    repository = module.get<jest.Mocked<IEquipmentRepository>>(EQUIPMENT_REPOSITORY);
+    repository =
+      module.get<jest.Mocked<IEquipmentRepository>>(EQUIPMENT_REPOSITORY);
   });
 
   // â”€â”€ findByCategoria â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -69,7 +75,9 @@ describe('IEquipmentRepository â€” busca por filtros', () => {
   // â”€â”€ findByFiltros â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   it('deve retornar equipamentos com filtros combinados', async () => {
-    const esperado = [makeEquipamento({ categoria: 'CÃ¢mera', localizacao: 'Curitiba - PR' })];
+    const esperado = [
+      makeEquipamento({ categoria: 'CÃ¢mera', localizacao: 'Curitiba - PR' }),
+    ];
     repository.findByFiltros.mockResolvedValue(esperado);
 
     const filtros = new BuscarEquipamentoDto();
@@ -91,18 +99,26 @@ describe('IEquipmentRepository â€” busca por filtros', () => {
 
   it('deve retornar apenas equipamentos disponÃ­veis', async () => {
     // O repositÃ³rio jÃ¡ filtra por DISPONIVEL internamente
-    const disponivel = makeEquipamento({ status: StatusEquipamento.DISPONIVEL });
+    const disponivel = makeEquipamento({
+      status: StatusEquipamento.DISPONIVEL,
+    });
     repository.findByFiltros.mockResolvedValue([disponivel]);
 
-    const resultado = await repository.findByFiltros(new BuscarEquipamentoDto({}));
+    const resultado = await repository.findByFiltros(
+      new BuscarEquipamentoDto({}),
+    );
 
-    expect(resultado.every(e => e.status === StatusEquipamento.DISPONIVEL)).toBe(true);
+    expect(
+      resultado.every((e) => e.status === StatusEquipamento.DISPONIVEL),
+    ).toBe(true);
   });
 
   it('deve retornar lista vazia quando nÃ£o houver resultados', async () => {
     repository.findByFiltros.mockResolvedValue([]);
 
-    const resultado = await repository.findByFiltros(new BuscarEquipamentoDto({ categoria: 'Inexistente' }));
+    const resultado = await repository.findByFiltros(
+      new BuscarEquipamentoDto({ categoria: 'Inexistente' }),
+    );
 
     expect(resultado).toEqual([]);
   });
@@ -111,7 +127,9 @@ describe('IEquipmentRepository â€” busca por filtros', () => {
     const barato = makeEquipamento({ precoDiaria: 80 });
     repository.findByFiltros.mockResolvedValue([barato]);
 
-    const resultado = await repository.findByFiltros(new BuscarEquipamentoDto({ precoMaximo: 100 }));
+    const resultado = await repository.findByFiltros(
+      new BuscarEquipamentoDto({ precoMaximo: 100 }),
+    );
 
     expect(resultado[0].precoDiaria).toBeLessThanOrEqual(100);
   });

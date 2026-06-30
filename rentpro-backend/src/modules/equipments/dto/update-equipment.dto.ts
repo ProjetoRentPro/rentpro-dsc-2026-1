@@ -1,4 +1,10 @@
-import { IsEnum, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 import { StatusEquipamento } from '../enums/status-equipamento.enum';
 
 export class UpdateEquipmentDto {

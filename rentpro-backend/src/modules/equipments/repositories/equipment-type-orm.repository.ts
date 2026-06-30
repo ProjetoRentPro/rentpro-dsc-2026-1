@@ -53,7 +53,9 @@ export class EquipmentTypeORMRepository implements IEquipmentRepository {
     });
   }
 
-  async findByFiltros(filtros: BuscarEquipamentoDto): Promise<EquipmentEntity[]> {
+  async findByFiltros(
+    filtros: BuscarEquipamentoDto,
+  ): Promise<EquipmentEntity[]> {
     const where: FindOptionsWhere<EquipmentEntity> = {
       status: StatusEquipamento.DISPONIVEL, // ← sempre filtra disponíveis
     };

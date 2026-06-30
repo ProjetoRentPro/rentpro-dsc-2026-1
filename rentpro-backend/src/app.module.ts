@@ -19,7 +19,7 @@ import { AuthModule } from './modules/auth/auth.module';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
         port: parseInt(configService.get('DB_PORT', '5432'), 10),
