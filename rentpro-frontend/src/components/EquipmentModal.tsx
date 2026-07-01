@@ -1,17 +1,17 @@
 import { useEffect, useRef } from 'react';
-import type { Equipment, CreateEquipmentPayload, UpdateEquipmentPayload } from '../services/equipment.service';
-import { equipmentService } from '../services/equipment.service';
+import type { Equipment, CreateEquipmentRequest, UpdateEquipmentRequest } from '../types/equipment';
+import { createEquipment, updateEquipment } from '../api/equipmentsApi';
+import { getErrorMessage } from '../utils/getErrorMessage';
 import './EquipmentModal.css';
 
 interface Props {
-  token: string;
   proprietarioId: number;
   equipment?: Equipment;
   onClose: () => void;
   onSaved: () => void;
 }
 
-export function EquipmentModal({ token, proprietarioId, equipment, onClose, onSaved }: Props) {
+export function EquipmentModal({ proprietarioId, equipment, onClose, onSaved }: Props) {
   const backdropRef = useRef<HTMLDivElement>(null);
   const isEdit = !!equipment;
 
@@ -28,7 +28,7 @@ export function EquipmentModal({ token, proprietarioId, equipment, onClose, onSa
 
     try {
       if (isEdit) {
-        const payload: UpdateEquipmentPayload = {
+        const payload: UpdateEquipmentRequest = {
           nome: get('nome'),
           descricao: get('descricao') || undefined,
           categoria: get('categoria'),
@@ -36,9 +36,9 @@ export function EquipmentModal({ token, proprietarioId, equipment, onClose, onSa
           precoDiaria: parseFloat(get('precoDiaria')),
           status: get('status') as 'disponivel' | 'indisponivel',
         };
-        await equipmentService.update(equipment.id, payload, token);
+        await updateEquipment(equipment.id, payload);
       } else {
-        const payload: CreateEquipmentPayload = {
+        const payload: CreateEquipmentRequest = {
           nome: get('nome'),
           proprietarioId,
           descricao: get('descricao') || undefined,
@@ -46,12 +46,12 @@ export function EquipmentModal({ token, proprietarioId, equipment, onClose, onSa
           localizacao: get('localizacao'),
           precoDiaria: parseFloat(get('precoDiaria')),
         };
-        await equipmentService.create(payload, token);
+        await createEquipment(payload);
       }
       onSaved();
       onClose();
     } catch (err) {
-      alert('Erro ao salvar equipamento: ' + (err as { message?: string })?.message ?? '');
+      alert('Erro ao salvar equipamento: ' + getErrorMessage(err));
     }
   }
 

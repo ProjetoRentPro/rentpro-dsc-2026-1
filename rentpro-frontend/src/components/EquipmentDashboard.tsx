@@ -1,37 +1,38 @@
 import { useState, useEffect, useCallback } from 'react';
-import { equipmentService } from '../services/equipment.service';
-import type { Equipment } from '../services/equipment.service';
+import { getEquipments, deleteEquipment } from '../api/equipmentsApi';
+import type { Equipment } from '../types/equipment';
 import { EquipmentModal } from './EquipmentModal';
+import { useAuth } from '../auth/useAuth';
 import './EquipmentDashboard.css';
 
-interface Props {
-  token: string;
-  userId: number;
-}
-
-export function EquipmentDashboard({ token, userId }: Props) {
+export function EquipmentDashboard() {
+  const { user } = useAuth();
   const [equipments, setEquipments] = useState<Equipment[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState<Equipment | undefined>();
 
   const load = useCallback(async () => {
+    if (!user) return;
+
     setLoading(true);
     try {
-      const all = await equipmentService.findAll(token);
-      setEquipments(all.filter(e => e.proprietarioId === userId));
+      const all = await getEquipments();
+      setEquipments(all.filter((e) => e.proprietarioId === user.id));
     } catch {
       setEquipments([]);
     } finally {
       setLoading(false);
     }
-  }, [token, userId]);
+  }, [user]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   async function handleDelete(id: string) {
     if (!confirm('Remover este equipamento?')) return;
-    await equipmentService.remove(id, token);
+    await deleteEquipment(id);
     load();
   }
 
@@ -44,6 +45,8 @@ export function EquipmentDashboard({ token, userId }: Props) {
     setEditing(undefined);
     setShowModal(true);
   }
+
+  if (!user) return null;
 
   return (
     <div className="dashboard">
@@ -92,8 +95,7 @@ export function EquipmentDashboard({ token, userId }: Props) {
 
       {showModal && (
         <EquipmentModal
-          token={token}
-          proprietarioId={userId}
+          proprietarioId={user.id}
           equipment={editing}
           onClose={() => setShowModal(false)}
           onSaved={load}

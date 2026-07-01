@@ -1,51 +1,41 @@
-import { useState } from 'react';
-import { AuthModal } from './AuthModal';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../auth/useAuth';
 import './Header.css';
 
-interface Props {
-  isAuthenticated: boolean;
-  onLogin: (token: string) => void;
-  onLogout: () => void;
-}
-
-export function Header({ isAuthenticated, onLogin, onLogout }: Props) {
-  const [showModal, setShowModal] = useState(false);
+export function Header() {
+  const { isAuthenticated, signOut } = useAuth();
 
   return (
-    <>
-      <header className="header">
-        <div className="header-inner">
-          <a href="/" className="header-brand">
-            <span className="header-logo">📦</span>
-            <span className="header-name">RentPro</span>
-          </a>
+    <header className="header">
+      <div className="header-inner">
+        <Link to="/" className="header-brand">
+          <span className="header-logo">📦</span>
+          <span className="header-name">RentPro</span>
+        </Link>
 
-          <nav className="header-nav">
-            <a href="#sobre">Sobre</a>
-            <a href="#equipamentos">Equipamentos</a>
-            <a href="#contato">Contato</a>
-          </nav>
+        <nav className="header-nav">
+          <a href="/#sobre">Sobre</a>
+          <a href="/#equipamentos">Equipamentos</a>
+          <a href="/#contato">Contato</a>
+        </nav>
 
-          <div className="header-actions">
-            {isAuthenticated ? (
-              <button className="btn-logout" onClick={onLogout}>
+        <div className="header-actions">
+          {isAuthenticated ? (
+            <>
+              <Link className="btn-login" to="/dashboard">
+                Minha área
+              </Link>
+              <button className="btn-logout" onClick={signOut}>
                 Sair
               </button>
-            ) : (
-              <button className="btn-login" onClick={() => setShowModal(true)}>
-                Entrar
-              </button>
-            )}
-          </div>
+            </>
+          ) : (
+            <Link className="btn-login" to="/login">
+              Entrar
+            </Link>
+          )}
         </div>
-      </header>
-
-      {showModal && (
-        <AuthModal
-          onClose={() => setShowModal(false)}
-          onSuccess={onLogin}
-        />
-      )}
-    </>
+      </div>
+    </header>
   );
 }
